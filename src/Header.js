@@ -1,4 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import './Header.css';
+
 
 class Header extends React.Component {
   render() {
@@ -8,23 +11,19 @@ class Header extends React.Component {
           <h1>My all times favorite movies LIST</h1>
           <ul>
             <li>
-              <a href="#link1">link - 1</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <a href="#link2">link - 2</a>
+              <Link to="/aboutMoviesList">about this App - my favorite movies LIST</Link>
             </li>
             <li>
-              <a href="#link3">link - 3</a>
+              <Link to="/aboutMichellePannosch">about Michelle Pannosch</Link>
             </li>
             <li>
-              <a href="#link4">link - 4</a>
+              <Link to="/myMoviesList">my favorite movies LIST</Link>
             </li>
           </ul>
         </nav>
-        <div id="link1"></div>
-        <div id="link2"></div>
-        <div id="link3"></div>
-        <div id="link4"></div>
       </React.Fragment>
     );
   }

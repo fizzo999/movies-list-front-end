@@ -1,0 +1,34 @@
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin: 2rem;
+}
+
+nav ul {
+  margin: 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+  background-color: bisque;
+  list-style: none;
+  border-radius: 1rem;
+}
+
+nav ul li {
+  margin: 0;
+  border: 1px solid orange;
+  border-radius: 1rem;
+  padding: 2rem;
+  transition: all 400ms ease-in-out;
+}
+
+nav ul li:hover {
+  background-color: rgb(253, 179, 87);
+  color: white;
+  border: 1px solid rgb(255, 141, 2);
+}
+
+nav ul li a {
+  text-decoration: wavy;
+}
