@@ -19,8 +19,7 @@ class Form extends React.Component {
     const userInputRender2Page = document.getElementById('user-input');
     userInputRender2Page.innerText = userInput;
     if (!userInput)
-      userInputRender2Page.innerText =
-        'well the minimum s gotta b something here, right ?';
+      userInputRender2Page.innerText = 'the search field is empty right now';
   };
   render() {
     return (
@@ -32,7 +31,7 @@ class Form extends React.Component {
         </h3>
         <p id='user-input'>nothing yet</p>
         <form id='movies-search-form'>
-          <label htmlFor='movies-input'>type your input here</label>
+          <label htmlFor='movies-input'>enter your movie search here</label>
           <input
             type='text'
             id='movies-input'

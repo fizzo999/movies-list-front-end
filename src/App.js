@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, Redirect } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Header from './Header.js';
 import Form from './Form.js';
@@ -32,7 +32,7 @@ class App extends React.Component {
 
           <Route path="/aboutMoviesList" element={<aboutMoviesListComponent/>}/>
 
-          <Route path="/aboutMichelleRossee"element={<aboutMichelleRosseeComponent/>}/>
+          <Route path="/aboutMichellePannosch"element={<aboutMichellePannoschComponent/>}/>
 
           <Route path="/myMoviesList"element={<myMoviesListComponent toggleLoading={this.toggleLoading}/>}/>
 
