@@ -7,7 +7,7 @@
 
 .movieCard {
   width: 30%;
-  margin: 0 1rem;
+  margin: 1rem;
   border: solid rgb(20, 0, 63) 2px;
   border-radius: 5px;
 }

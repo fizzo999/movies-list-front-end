@@ -26,16 +26,6 @@ const AboutMichellePannoschComponent = () => {
     // isAuthenticated && (
     <Container fluid='md' maxwidth='sm'>
       <h1>About Michelle Pannosch</h1>
-      <h4>
-        <a
-          href='https://github.com/CoderMichelle'
-          alt='Michelle`s github source code'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Michelle`s GitHub Source Code
-        </a>
-      </h4>
       <h2>Hover over the image to learn more about Michelle</h2>
       <section className='about-us-wrapper'>
         <div className='about-card-container'>
