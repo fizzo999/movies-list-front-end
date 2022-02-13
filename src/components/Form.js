@@ -1,5 +1,6 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
+import '../style/Form.css';
 
 class Form extends React.Component {
   constructor(props) {
@@ -38,18 +39,25 @@ class Form extends React.Component {
         <h3>Form</h3>
         <h3>
           and here is just a reminder of what you typed and what we are
-          currently searching for ....
+          currently searching for:
         </h3>
         <p id='user-input'>nothing yet</p>
         <form id='movies-search-form' onSubmit={this.handleSubmit}>
-          <label htmlFor='movies-input'>enter your movie search here</label>
-          <input
-            type='text'
-            id='movies-input'
-            name='moviesinput'
-            onChange={this.handleChange}
-          ></input>
-          <button type='submit'>click here to search for movies</button>
+          <fieldset>
+            <legend>
+              Please type a search term in the input field to look for movies
+            </legend>
+            {/* <label htmlFor='movies-input'>enter your movie search here</label>
+            <br /> */}
+            <input
+              type='text'
+              id='movies-input'
+              name='moviesinput'
+              onChange={this.handleChange}
+            ></input>
+            <br />
+            <button type='submit'>click here to search for movies</button>
+          </fieldset>
         </form>
       </Container>
     );

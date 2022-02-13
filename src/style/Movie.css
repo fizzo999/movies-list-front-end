@@ -8,8 +8,8 @@
 .movieCard {
   width: 30%;
   margin: 0 1rem;
-  border: solid blue 3px;
-  border-radius: 10px;
+  border: solid rgb(20, 0, 63) 2px;
+  border-radius: 5px;
 }
 
 .movieCard img {

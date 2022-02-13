@@ -18,24 +18,6 @@ h4 {
   border-radius: 5px;
 }
 
-.Michelle_002 {
-  background-image: url('../assets/Michelle_002.jpg');
-  background-size: cover;
-  border-radius: 5px;
-}
-
-.Michelle_003 {
-  background-image: url('../assets/Michelle_003.jpg');
-  background-size: cover;
-  border-radius: 5px;
-}
-
-.Michelle_004 {
-  background-image: url('../assets/Michelle_004.jpg');
-  background-size: cover;
-  border-radius: 5px;
-}
-
 .center {
   display: flex;
   justify-content: center;
