@@ -1,0 +1,18 @@
+.card-group {
+  align-items: flex-start;
+  justify-content: center;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.movieCard {
+  width: 30%;
+  margin: 0 1rem;
+  border: solid blue 3px;
+  border-radius: 10px;
+}
+
+.movieCard img {
+  width: 90%;
+  margin: 1rem auto;
+}

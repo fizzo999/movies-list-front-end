@@ -1,4 +1,5 @@
 import React from 'react';
+import Container from 'react-bootstrap/Container';
 
 class Form extends React.Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class Form extends React.Component {
   };
   render() {
     return (
-      <>
+      <Container fluid='md' maxwidth='sm'>
         <h3>Form</h3>
         <h3>
           and here is just a reminder of what you typed and what we are
@@ -50,7 +51,7 @@ class Form extends React.Component {
           ></input>
           <button type='submit'>click here to search for movies</button>
         </form>
-      </>
+      </Container>
     );
   }
 }

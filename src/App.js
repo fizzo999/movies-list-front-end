@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import './App.css';
-import Header from './Header.js';
-import Form from './Form.js';
-import Footer from './Footer.js';
-import AboutMoviesList from './AboutMoviesListComponent.js';
-import AboutMichellePannosch from './AboutMichellePannoschComponent.js';
-import MyMoviesList from './MyMoviesListComponent.js';
+import './style/App.css';
+import Header from './components/Header.js';
+import Form from './components/Form.js';
+import Footer from './components/Footer.js';
+import AboutMoviesList from './components/AboutMoviesListComponent.js';
+import AboutMichellePannosch from './components/AboutMichellePannoschComponent.js';
+import MyMoviesList from './components/MyMoviesListComponent.js';
 
 import axios from 'axios';
 

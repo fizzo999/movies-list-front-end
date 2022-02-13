@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Container from 'react-bootstrap/Container';
+import CardGroup from 'react-bootstrap/CardGroup';
 import Movie from './Movie.js';
 
 class MyMoviesListComponent extends Component {
@@ -21,9 +23,11 @@ class MyMoviesListComponent extends Component {
       });
     }
     return (
-      <>
-        <div>{moviesComponentArray}</div>
-      </>
+      <Container>
+        <CardGroup>
+          <React.Fragment>{moviesComponentArray}</React.Fragment>
+        </CardGroup>
+      </Container>
     );
   }
 }
