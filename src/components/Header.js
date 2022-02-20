@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
+import LoginButton from './LoginButton.js';
+import LogoutButton from './LogoutButton.js';
 import '../style/Header.css';
 
 class Header extends React.Component {
@@ -10,6 +12,12 @@ class Header extends React.Component {
         <nav>
           <h1>My all times favorite movies LIST</h1>
           <ul>
+            {this.props.isAuthenticated ? (
+              <LogoutButton className='logoutButton' />
+            ) : (
+              <LoginButton className='commentBtnActive' />
+            )}
+
             <li>
               <Link to='/'>Home</Link>
             </li>

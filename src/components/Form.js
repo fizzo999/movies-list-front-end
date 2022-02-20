@@ -31,7 +31,7 @@ class Form extends React.Component {
   render() {
     return (
       <Container fluid='md' maxwidth='sm'>
-        <h3>Form</h3>
+        {this.props.user ? <h3>hello, {this.props.user.name} !</h3> : ''}
         <h3>
           what we are currently searching for:{' '}
           <span id='user-input'>nothing yet</span>

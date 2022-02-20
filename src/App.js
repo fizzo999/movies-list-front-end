@@ -1,4 +1,5 @@
 import React from 'react';
+import { withAuth0 } from '@auth0/auth0-react';
 import { Route, Routes } from 'react-router-dom';
 import './style/App.css';
 import Header from './components/Header.js';
@@ -9,6 +10,7 @@ import AboutMichellePannosch from './components/AboutMichellePannoschComponent.j
 import MovieResultsFromAPI from './components/MyMoviesListComponent.js';
 import MyMoviesList from './components/StoredMoviesList.js';
 import ApiLoadingModal from './components/Modal.js';
+import Alert from './components/Alert.js';
 
 import axios from 'axios';
 
@@ -18,6 +20,7 @@ class App extends React.Component {
     this.state = {
       searchInput: '',
       error: false,
+      errorMessage: '',
       loading: false,
       showModal: false,
       saving2List: false,
@@ -28,23 +31,43 @@ class App extends React.Component {
       myFavoriteMoviesList: [
         { title: 'firstSampleObject', hereIsFirstSampleObj: true },
       ],
+      user: null,
     };
   }
 
   hoistInputFromMoviesForm = inputfromform => {
-    this.setState({ searchInput: inputfromform, hasSearched: true });
-    this.apiCallTMDB(inputfromform);
+    if (inputfromform === '') {
+      alert('Please enter a movie you d like to search for');
+    } else {
+      this.setState({
+        searchInput: inputfromform,
+        hasSearched: true,
+        error: false,
+        errorMessage: '',
+      });
+      this.apiCallTMDB(inputfromform);
+    }
   };
 
   apiCallTMDB = async searchInput => {
     this.setState({ loading: true });
-    let resultsFromServer = await axios.get(
-      `${process.env.REACT_APP_BACKEND_SERVER}/movies?movieName=${searchInput}`
-    );
-    this.setState({
-      resultsFromServer: resultsFromServer.data,
-      status: resultsFromServer.status,
-    });
+    try {
+      let resultsFromServer = await axios.get(
+        `${process.env.REACT_APP_BACKEND_SERVER}/movies?movieName=${searchInput}`
+      );
+      if (resultsFromServer.status === 200) {
+        this.setState({
+          resultsFromServer: resultsFromServer.data,
+          status: resultsFromServer.status,
+        });
+      }
+    } catch (error) {
+      console.log('we are inside of error catch');
+      this.setState({
+        error: true,
+        errorMessage: `There was an error: ${error}`,
+      });
+    }
     setTimeout(() => this.setState({ loading: false }), 1000);
   };
 
@@ -83,10 +106,57 @@ class App extends React.Component {
     this.setState({ showModal: false });
   };
 
+  // loginUser = user => {
+  //   console.log('we are loggin in the user:', user);
+  //   if (user) this.setState({ user });
+  // };
+
+  // logoutUser = () => {
+  //   console.log('we are loggin OUT the user:', this.state.user);
+  //   this.setState({ user: null });
+  // };
+
+  makeRequest = async () => {
+    if (this.props.auth0.isAuthenticated) {
+      const results = await this.props.auth0.getIdTokenClaims();
+      const jwt = results.__raw;
+      console.log('here is jwt token', jwt);
+      const config = {
+        headers: { Authorization: `Bearer ${jwt}` },
+        method: 'get',
+        baseURL: process.env.REACT_APP_BACKEND_SERVER,
+        url: '/login-test',
+      };
+
+      try {
+        const axiosResults = await axios(config);
+        console.log(
+          'here is the results from our test request <<<<<<<<=========',
+          axiosResults.data
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   render() {
+    const { user, isAuthenticated } = this.props.auth0;
+    console.log('here is user', user);
+    console.log('here is this.props.auth0', this.props.auth0);
     return (
       <React.Fragment>
-        <Header />
+        <Header
+          // loginUser={this.loginUser}
+          // logoutUser={this.logoutUser}
+          isAuthenticated={isAuthenticated}
+        />
+        <button onClick={this.makeRequest}>click me to test</button>
+        {this.state.error ? (
+          <Alert alertMessage={this.state.errorMessage} />
+        ) : (
+          ''
+        )}
         <Routes>
           <Route
             path='/'
@@ -94,6 +164,7 @@ class App extends React.Component {
               <>
                 <Form
                   hoistInputFromMoviesForm={this.hoistInputFromMoviesForm}
+                  user={user}
                 />
                 {this.state.loading ? (
                   <ApiLoadingModal
@@ -145,4 +216,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withAuth0(App);

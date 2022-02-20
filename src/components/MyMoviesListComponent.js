@@ -6,7 +6,7 @@ import Movie from './Movie.js';
 class MyMoviesListComponent extends Component {
   render() {
     let moviesComponentArray = [];
-    if (this.props.results.length > 1) {
+    if (this.props.results.length > 0) {
       moviesComponentArray = this.props.results.map((movie, index) => {
         return (
           <Movie
