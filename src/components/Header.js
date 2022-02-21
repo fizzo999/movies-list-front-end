@@ -13,7 +13,11 @@ class Header extends React.Component {
           <h1>My all times favorite movies LIST</h1>
           <ul>
             {this.props.isAuthenticated ? (
-              <LogoutButton className='logoutButton' />
+              <LogoutButton
+                className='logoutButton'
+                logoutUser={this.props.logoutUser}
+                loginUser={this.props.loginUser}
+              />
             ) : (
               <LoginButton className='commentBtnActive' />
             )}

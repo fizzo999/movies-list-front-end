@@ -106,15 +106,18 @@ class App extends React.Component {
     this.setState({ showModal: false });
   };
 
-  // loginUser = user => {
-  //   console.log('we are loggin in the user:', user);
-  //   if (user) this.setState({ user });
-  // };
+  loginUser = userFromLogoutBtn => {
+    this.setState({ user: userFromLogoutBtn });
+    console.log(
+      'App - inside of loginUser method and the user in state now is: ',
+      userFromLogoutBtn
+    );
+  };
 
-  // logoutUser = () => {
-  //   console.log('we are loggin OUT the user:', this.state.user);
-  //   this.setState({ user: null });
-  // };
+  logoutUser = () => {
+    console.log('we are loggin OUT the user:', this.state.user);
+    this.setState({ user: null });
+  };
 
   makeRequest = async () => {
     if (this.props.auth0.isAuthenticated) {
@@ -142,13 +145,11 @@ class App extends React.Component {
 
   render() {
     const { user, isAuthenticated } = this.props.auth0;
-    console.log('here is user', user);
-    console.log('here is this.props.auth0', this.props.auth0);
     return (
       <React.Fragment>
         <Header
-          // loginUser={this.loginUser}
-          // logoutUser={this.logoutUser}
+          loginUser={this.loginUser}
+          logoutUser={this.logoutUser}
           isAuthenticated={isAuthenticated}
         />
         <button onClick={this.makeRequest}>click me to test</button>
