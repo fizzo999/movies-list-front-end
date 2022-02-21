@@ -55,9 +55,7 @@ class Movie extends Component {
           </Card.Text>
           <Card.Text>total votes: {this.props.movieObj.total_votes}</Card.Text>
           <Card.Text>popularity: {this.props.movieObj.popularity}</Card.Text>
-          <Card.Text>
-            release date: {this.props.movieObj.release_date}
-          </Card.Text>
+          <Card.Text>release date: {this.props.movieObj.released_on}</Card.Text>
           {this.props.included ? (
             <Card.Body>
               <input
