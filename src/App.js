@@ -13,6 +13,7 @@ import ApiLoadingModal from './components/Modal.js';
 import Alert from './components/Alert.js';
 
 import axios from 'axios';
+import LoginButton from './components/LoginButton';
 
 class App extends React.Component {
   constructor(props) {
@@ -34,6 +35,24 @@ class App extends React.Component {
       user: null,
     };
   }
+
+  retrieveJWTToken = async () => {
+    try {
+      let { getIdTokenClaims } = this.props.auth0;
+      let tokenClaims = await getIdTokenClaims();
+      let jwt = tokenClaims.__raw;
+      let config = {
+        headers: { Authorization: `Bearer ${jwt}` },
+        baseURL: process.env.REACT_APP_BACKEND_SERVER,
+      };
+      return config;
+    } catch (error) {
+      this.setState({
+        error: true,
+        errorMessage: `There was an error: ${error}`,
+      });
+    }
+  };
 
   hoistInputFromMoviesForm = inputfromform => {
     if (inputfromform === '') {
@@ -145,75 +164,88 @@ class App extends React.Component {
 
   render() {
     const { user, isAuthenticated } = this.props.auth0;
-    return (
-      <React.Fragment>
-        <Header
-          loginUser={this.loginUser}
-          logoutUser={this.logoutUser}
-          isAuthenticated={isAuthenticated}
-        />
-        <button onClick={this.makeRequest}>click me to test</button>
-        {this.state.error ? (
-          <Alert alertMessage={this.state.errorMessage} />
-        ) : (
-          ''
-        )}
-        <Routes>
-          <Route
-            path='/'
-            element={
-              <>
-                <Form
-                  hoistInputFromMoviesForm={this.hoistInputFromMoviesForm}
-                  user={user}
+    if (!isAuthenticated) {
+      return (
+        <div className='loginButtonStartpage'>
+          <h1>welcome to favorite movies LIST APP</h1>
+          <h2>Please log in to use this APP - we will never share your info</h2>
+          <h2>secure authentication is provided by auth0</h2>
+          <LoginButton />
+        </div>
+      );
+    } else {
+      return (
+        <React.Fragment>
+          <Header
+            loginUser={this.loginUser}
+            logoutUser={this.logoutUser}
+            isAuthenticated={isAuthenticated}
+          />
+          <div className='testButton'>
+            <button onClick={this.makeRequest}>click me to test</button>
+          </div>
+          {this.state.error ? (
+            <Alert alertMessage={this.state.errorMessage} />
+          ) : (
+            ''
+          )}
+          <Routes>
+            <Route
+              path='/'
+              element={
+                <>
+                  <Form
+                    hoistInputFromMoviesForm={this.hoistInputFromMoviesForm}
+                    user={user}
+                  />
+                  {this.state.loading ? (
+                    <ApiLoadingModal
+                      openModal={this.openModal}
+                      closeModal={this.closeModal}
+                      modalHeaderText={'contacting IMDB'}
+                      modalLoadingText={'LOADING YOUR RESULTS'}
+                    />
+                  ) : (
+                    ''
+                  )}
+                  {this.state.resultsFromServer.length > 0 ? (
+                    <MovieResultsFromAPI
+                      results={this.state.resultsFromServer}
+                      add={this.addToFavoriteMoviesLIST}
+                      saving2List={this.state.saving2List}
+                      openModal={this.openModal}
+                      closeModal={this.closeModal}
+                    />
+                  ) : (
+                    ''
+                  )}
+                </>
+              }
+            />
+
+            <Route path='/aboutMoviesList' element={<AboutMoviesList />} />
+
+            <Route
+              path='/aboutMichellePannosch'
+              element={<AboutMichellePannosch />}
+            />
+
+            <Route
+              path='/myMoviesList'
+              element={
+                <MyMoviesList
+                  list={this.state.myFavoriteMoviesList}
+                  add={this.addToFavoriteMoviesLIST}
+                  remove={this.removeFromFavoriteMoviesLIST}
+                  addComment={this.addComment}
                 />
-                {this.state.loading ? (
-                  <ApiLoadingModal
-                    openModal={this.openModal}
-                    closeModal={this.closeModal}
-                    modalHeaderText={'contacting IMDB'}
-                    modalLoadingText={'LOADING YOUR RESULTS'}
-                  />
-                ) : (
-                  ''
-                )}
-                {this.state.resultsFromServer.length > 0 ? (
-                  <MovieResultsFromAPI
-                    results={this.state.resultsFromServer}
-                    add={this.addToFavoriteMoviesLIST}
-                    saving2List={this.state.saving2List}
-                    openModal={this.openModal}
-                    closeModal={this.closeModal}
-                  />
-                ) : (
-                  ''
-                )}
-              </>
-            }
-          />
-
-          <Route path='/aboutMoviesList' element={<AboutMoviesList />} />
-
-          <Route
-            path='/aboutMichellePannosch'
-            element={<AboutMichellePannosch />}
-          />
-
-          <Route
-            path='/myMoviesList'
-            element={
-              <MyMoviesList
-                list={this.state.myFavoriteMoviesList}
-                add={this.addToFavoriteMoviesLIST}
-                remove={this.removeFromFavoriteMoviesLIST}
-                addComment={this.addComment}
-              />
-            }
-          />
-        </Routes>
-        <Footer />
-      </React.Fragment>
-    );
+              }
+            />
+          </Routes>
+          <Footer />
+        </React.Fragment>
+      );
+    }
   }
 }
 

@@ -2,6 +2,19 @@
   text-align: center;
 }
 
+div.loginButtonStartpage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+div.testButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* div.btnContainer {
   display: flex;
   justify-content: center;
