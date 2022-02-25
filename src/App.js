@@ -2,8 +2,11 @@ import React from 'react';
 import { withAuth0 } from '@auth0/auth0-react';
 import { Route, Routes } from 'react-router-dom';
 import './style/App.css';
+
+import MoviesParentComponent from './components/MoviesParentComponent.js';
+
 import Header from './components/Header.js';
-import Form from './components/Form.js';
+// import Form from './components/Form.js';
 import Footer from './components/Footer.js';
 import AboutMoviesList from './components/AboutMoviesListComponent.js';
 import AboutMichellePannosch from './components/AboutMichellePannoschComponent.js';
@@ -19,9 +22,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchInput: '',
       error: false,
       errorMessage: '',
+      searchInput: '',
       loading: false,
       showModal: false,
       saving2List: false,
@@ -29,9 +32,7 @@ class App extends React.Component {
       resultsFromServer: [],
       status: null,
       movieResultsShowing: false,
-      myFavoriteMoviesList: [
-        { title: 'firstSampleObject', hereIsFirstSampleObj: true },
-      ],
+      myFavoriteMoviesList: [],
       user: null,
     };
   }
@@ -68,6 +69,13 @@ class App extends React.Component {
     }
   };
 
+  hoistError = error => {
+    this.setState({
+      error: true,
+      errorMessage: `There was an error with the database action: ${error}`,
+    });
+  };
+
   apiCallTMDB = async searchInput => {
     this.setState({ loading: true });
     try {
@@ -91,7 +99,10 @@ class App extends React.Component {
   };
 
   addToFavoriteMoviesLIST = movieObj => {
-    if (!this.state.myFavoriteMoviesList.includes(movieObj)) {
+    if (
+      !this.state.myFavoriteMoviesList.length ||
+      !this.state.myFavoriteMoviesList.includes(movieObj)
+    ) {
       this.setState({
         saving2List: true,
         myFavoriteMoviesList: [...this.state.myFavoriteMoviesList, movieObj],
@@ -138,32 +149,33 @@ class App extends React.Component {
     this.setState({ user: null });
   };
 
-  makeRequest = async () => {
-    if (this.props.auth0.isAuthenticated) {
-      const results = await this.props.auth0.getIdTokenClaims();
-      const jwt = results.__raw;
-      console.log('here is jwt token', jwt);
-      const config = {
-        headers: { Authorization: `Bearer ${jwt}` },
-        method: 'get',
-        baseURL: process.env.REACT_APP_BACKEND_SERVER,
-        url: '/login-test',
-      };
+  // makeRequest = async () => {
+  //   if (this.props.auth0.isAuthenticated) {
+  //     const results = await this.props.auth0.getIdTokenClaims();
+  //     const jwt = results.__raw;
+  //     console.log('here is jwt token', jwt);
+  //     const config = {
+  //       headers: { Authorization: `Bearer ${jwt}` },
+  //       method: 'get',
+  //       baseURL: process.env.REACT_APP_BACKEND_SERVER,
+  //       url: '/login-test',
+  //     };
 
-      try {
-        const axiosResults = await axios(config);
-        console.log(
-          'here is the results from our test request <<<<<<<<=========',
-          axiosResults.data
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
+  //     try {
+  //       const axiosResults = await axios(config);
+  //       console.log(
+  //         'here is the results from our test request <<<<<<<<=========',
+  //         axiosResults.data
+  //       );
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
   render() {
-    const { user, isAuthenticated } = this.props.auth0;
+    const { isAuthenticated } = this.props.auth0;
+    // const { user, isAuthenticated } = this.props.auth0;
     if (!isAuthenticated) {
       return (
         <div className='loginButtonStartpage'>
@@ -181,23 +193,24 @@ class App extends React.Component {
             logoutUser={this.logoutUser}
             isAuthenticated={isAuthenticated}
           />
-          <div className='testButton'>
+          {/* <div className='testButton'>
             <button onClick={this.makeRequest}>click me to test</button>
-          </div>
+          </div> */}
           {this.state.error ? (
             <Alert alertMessage={this.state.errorMessage} />
           ) : (
             ''
           )}
+          <MoviesParentComponent />
           <Routes>
             <Route
               path='/'
               element={
                 <>
-                  <Form
+                  {/* <Form
                     hoistInputFromMoviesForm={this.hoistInputFromMoviesForm}
                     user={user}
-                  />
+                  /> */}
                   {this.state.loading ? (
                     <ApiLoadingModal
                       openModal={this.openModal}
@@ -238,6 +251,7 @@ class App extends React.Component {
                   add={this.addToFavoriteMoviesLIST}
                   remove={this.removeFromFavoriteMoviesLIST}
                   addComment={this.addComment}
+                  hoistError={this.hoistError}
                 />
               }
             />

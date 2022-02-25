@@ -24,7 +24,6 @@ class StoredMoviesList extends Component {
 
   retrieveJWTToken = async () => {
     try {
-      // do we need to pass auth0 as props ???? lets try without first !!!
       let { getIdTokenClaims } = this.props.auth0;
       let tokenClaims = await getIdTokenClaims();
       let jwt = tokenClaims.__raw;
@@ -35,7 +34,6 @@ class StoredMoviesList extends Component {
       return config;
     } catch (error) {
       console.log(error);
-      // TO DO !!!
       this.props.hoistError(error);
     }
   };
@@ -52,7 +50,6 @@ class StoredMoviesList extends Component {
       }
     } catch (error) {
       console.log(error);
-      // TO DO !!!
       this.props.hoistError(error);
     }
   };
@@ -72,7 +69,6 @@ class StoredMoviesList extends Component {
       }
     } catch (error) {
       console.log(error);
-      // TO DO !!!
       this.props.hoistError(error);
     }
   };
@@ -94,7 +90,6 @@ class StoredMoviesList extends Component {
       }
     } catch (error) {
       console.log(error);
-      // TO DO !!!
       this.props.hoistError(error);
     }
   };
@@ -115,10 +110,18 @@ class StoredMoviesList extends Component {
       }
     } catch (error) {
       console.log(error);
-      // TO DO !!!
       this.props.hoistError(error);
     }
   };
+
+  setMovieForModal = movie => {
+    if (movie) {
+      this.setState({
+        selectedMovie: movie,
+      });
+    }
+  };
+
   updateMovie = async movieToUpdate => {
     this.openCloseModal();
     try {
@@ -139,39 +142,45 @@ class StoredMoviesList extends Component {
       });
     } catch (error) {
       console.log(error);
-      // TO DO !!!
       this.props.hoistError(error);
     }
   };
 
   render() {
+    console.log(
+      'inside storedMoviesList.js - and here is state',
+      this.state.moviesDB
+    );
     let moviesComponentArray = [];
-    let newFavoriteMovieList;
-    if (this.props.list.length > 1) {
-      newFavoriteMovieList = [...this.props.list];
-      newFavoriteMovieList = newFavoriteMovieList.slice(1);
-      console.log(
-        'we are in StoredMoviesList and here is newFavoriteMovieList',
-        newFavoriteMovieList
-      );
-      moviesComponentArray = newFavoriteMovieList.map((movie, index) => {
+    // let newFavoriteMovieList;
+    if (this.state.moviesDB.length) {
+      // if (this.state.moviesDB.length > 1) {
+      //   newFavoriteMovieList = [...this.state.moviesDB];
+      //   newFavoriteMovieList = newFavoriteMovieList.slice(1);
+      //   console.log(
+      //     'we are in StoredMoviesList and here is newFavoriteMovieList',
+      //     newFavoriteMovieList
+      //   );
+      //   moviesComponentArray = newFavoriteMovieList.map((movie, index) => {
+      moviesComponentArray = this.state.moviesDB.map((movie, index) => {
         return (
           <Movie
             key={`db-movie-${index}`}
-            add={this.props.add}
+            // add={this.props.add}
             remove={this.props.remove}
             movieObj={movie}
             included={true}
             addComment={this.props.addComment}
+            setMovieForModal={this.setMovieForModal}
           />
         );
       });
     }
     return (
-      <Container>
+      <Container fluid>
         <CardGroup>
           <React.Fragment>
-            {this.props.list.length > 1 ? (
+            {this.state.moviesDB ? (
               moviesComponentArray
             ) : (
               <h3>
