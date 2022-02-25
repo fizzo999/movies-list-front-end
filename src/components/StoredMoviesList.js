@@ -14,7 +14,7 @@ class StoredMoviesList extends Component {
     super(props);
     this.state = {
       openModal: false,
-      moviesDB: [],
+      moviesDB: this.props.moviesDB,
       error: false,
       errorMessage: '',
       selectedMovie: {},
@@ -22,27 +22,11 @@ class StoredMoviesList extends Component {
     };
   }
 
-  retrieveJWTToken = async () => {
-    try {
-      let { getIdTokenClaims } = this.props.auth0;
-      let tokenClaims = await getIdTokenClaims();
-      let jwt = tokenClaims.__raw;
-      let config = {
-        headers: { Authorization: `Bearer ${jwt}` },
-        baseURL: process.env.REACT_APP_BACKEND_SERVER,
-      };
-      return config;
-    } catch (error) {
-      console.log(error);
-      this.props.hoistError(error);
-    }
-  };
-
   makeAnyRequest = async (method, url, obj = {}) => {
     try {
-      let config = await this.retrieveJWTToken();
-      config.method = method;
+      let config = await this.props.retrieveJWTToken();
       config.url = url;
+      config.method = method;
       config.data = obj;
       const serverResponse = await axios(config);
       if (serverResponse) {
@@ -65,6 +49,7 @@ class StoredMoviesList extends Component {
         this.setState({
           moviesDB: results.data,
         });
+        this.props.hoistResultsFromDB(results.data);
         // do we need to hoist the movies into state of App as well ??? since the add movie button is inside of app ????
       }
     } catch (error) {
@@ -79,20 +64,20 @@ class StoredMoviesList extends Component {
     });
   };
 
-  addMovie = async movie => {
-    try {
-      let results = await this.makeAnyRequest('post', '/dbmovies');
-      if (results) {
-        console.log('successfully added ONE movie to DB !!!');
-        this.setState({
-          moviesDB: [...this.state.moviesDB, results.data],
-        });
-      }
-    } catch (error) {
-      console.log(error);
-      this.props.hoistError(error);
-    }
-  };
+  // addMovie = async movie => {
+  //   try {
+  //     let results = await this.makeAnyRequest('post', '/dbmovies');
+  //     if (results) {
+  //       console.log('successfully added ONE movie to DB !!!');
+  //       this.setState({
+  //         moviesDB: [...this.state.moviesDB, results.data],
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     this.props.hoistError(error);
+  //   }
+  // };
 
   deleteMovie = async id => {
     try {
@@ -147,10 +132,10 @@ class StoredMoviesList extends Component {
   };
 
   render() {
-    console.log(
-      'inside storedMoviesList.js - and here is state',
-      this.state.moviesDB
-    );
+    // console.log(
+    //   'inside storedMoviesList.js - and here is state',
+    //   this.state.moviesDB
+    // );
     let moviesComponentArray = [];
     // let newFavoriteMovieList;
     if (this.state.moviesDB.length) {

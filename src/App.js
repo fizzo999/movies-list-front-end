@@ -15,7 +15,7 @@ import MyMoviesList from './components/StoredMoviesList.js';
 // import ApiLoadingModal from './components/Modal.js';
 import Alert from './components/Alert.js';
 
-// import axios from 'axios';
+import axios from 'axios';
 import LoginButton from './components/LoginButton';
 
 class App extends React.Component {
@@ -29,10 +29,42 @@ class App extends React.Component {
       resultsFromServer: [],
       status: null,
       movieResultsShowing: false,
-      myFavoriteMoviesList: [],
+      moviesDB: [],
       user: null,
     };
   }
+
+  retrieveJWTToken = async () => {
+    try {
+      let { getIdTokenClaims } = this.props.auth0;
+      let tokenClaims = await getIdTokenClaims();
+      let jwt = tokenClaims.__raw;
+      let config = {
+        headers: { Authorization: `Bearer ${jwt}` },
+        baseURL: process.env.REACT_APP_BACKEND_SERVER,
+      };
+      return config;
+    } catch (error) {
+      console.log(error);
+      this.props.hoistError(error);
+    }
+  };
+
+  makeAnyRequest = async (method, url, obj = {}) => {
+    try {
+      let config = await this.retrieveJWTToken();
+      config.method = method;
+      config.url = url;
+      config.data = obj;
+      const serverResponse = await axios(config);
+      if (serverResponse) {
+        return serverResponse;
+      }
+    } catch (error) {
+      console.log(error);
+      this.hoistError(error);
+    }
+  };
 
   // retrieveJWTToken = async () => {
   //   try {
@@ -78,6 +110,13 @@ class App extends React.Component {
       error: false,
       errorMessage: '',
       resultsFromServer: resultsArray,
+    });
+  };
+  hoistResultsFromDB = resultsArray => {
+    this.setState({
+      error: false,
+      errorMessage: '',
+      moviesDB: resultsArray,
     });
   };
 
@@ -215,6 +254,9 @@ class App extends React.Component {
                   <MoviesParentComponent
                     hoistResultsFromAPI={this.hoistResultsFromAPI}
                     resultsFromServer={this.state.resultsFromServer}
+                    makeAnyRequest={this.makeAnyRequest}
+                    hoistResultsFromDB={this.hoistResultsFromDB}
+                    moviesDB={this.state.moviesDB}
                   />
                   {/* <Form
                     hoistInputFromMoviesForm={this.hoistInputFromMoviesForm}
@@ -256,11 +298,14 @@ class App extends React.Component {
               path='/myMoviesList'
               element={
                 <MyMoviesList
-                  list={this.state.myFavoriteMoviesList}
-                  add={this.addToFavoriteMoviesLIST}
+                  moviesDB={this.state.moviesDB}
+                  // add={this.addToFavoriteMoviesLIST}
                   remove={this.removeFromFavoriteMoviesLIST}
                   addComment={this.addComment}
                   hoistError={this.hoistError}
+                  makeAnyRequest={this.makeAnyRequest}
+                  retrieveJWTToken={this.retrieveJWTToken}
+                  hoistResultsFromDB={this.hoistResultsFromDB}
                 />
               }
             />

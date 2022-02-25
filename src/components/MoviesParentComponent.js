@@ -21,6 +21,7 @@ export class MoviesParentComponent extends Component {
       myFavoriteMoviesList: [],
       error: false,
       errorMessage: '',
+      moviesDB: this.props.moviesDB,
     };
   }
   hoistInputFromMoviesForm = inputfromform => {
@@ -72,6 +73,27 @@ export class MoviesParentComponent extends Component {
       setTimeout(() => this.setState({ saving2List: false }), 3000);
     }
   };
+
+  addMovie = async movie => {
+    try {
+      let { user } = this.props.auth0;
+      movie.email = user.email;
+      console.log(
+        'well here is this.props.moviesDB object with user email',
+        this.props.moviesDB
+      );
+      let results = await this.props.makeAnyRequest('post', '/dbmovies', movie);
+      if (results) {
+        let newMoviesDB = [...this.props.moviesDB, results.data];
+        console.log('successfully added ONE movie to DB !!!');
+        this.props.hoistResultsFromDB(newMoviesDB);
+      }
+    } catch (error) {
+      console.log(error);
+      this.props.hoistError(error);
+    }
+  };
+
   removeFromFavoriteMoviesLIST = movieObj => {
     let newFavoriteMoviesList = [...this.state.myFavoriteMoviesList];
     newFavoriteMoviesList = newFavoriteMoviesList.filter(
@@ -111,7 +133,7 @@ export class MoviesParentComponent extends Component {
         {this.state.resultsFromServer.length > 0 ? (
           <MovieResultsFromAPI
             results={this.state.resultsFromServer}
-            add={this.addToFavoriteMoviesLIST}
+            add={this.addMovie}
             saving2List={this.state.saving2List}
             openModal={this.openModal}
             closeModal={this.closeModal}
