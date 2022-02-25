@@ -10,12 +10,12 @@ import Header from './components/Header.js';
 import Footer from './components/Footer.js';
 import AboutMoviesList from './components/AboutMoviesListComponent.js';
 import AboutMichellePannosch from './components/AboutMichellePannoschComponent.js';
-import MovieResultsFromAPI from './components/MyMoviesListComponent.js';
+// import MovieResultsFromAPI from './components/MyMoviesListComponent.js';
 import MyMoviesList from './components/StoredMoviesList.js';
-import ApiLoadingModal from './components/Modal.js';
+// import ApiLoadingModal from './components/Modal.js';
 import Alert from './components/Alert.js';
 
-import axios from 'axios';
+// import axios from 'axios';
 import LoginButton from './components/LoginButton';
 
 class App extends React.Component {
@@ -24,9 +24,6 @@ class App extends React.Component {
     this.state = {
       error: false,
       errorMessage: '',
-      searchInput: '',
-      loading: false,
-      showModal: false,
       saving2List: false,
       hasSearched: false,
       resultsFromServer: [],
@@ -37,37 +34,37 @@ class App extends React.Component {
     };
   }
 
-  retrieveJWTToken = async () => {
-    try {
-      let { getIdTokenClaims } = this.props.auth0;
-      let tokenClaims = await getIdTokenClaims();
-      let jwt = tokenClaims.__raw;
-      let config = {
-        headers: { Authorization: `Bearer ${jwt}` },
-        baseURL: process.env.REACT_APP_BACKEND_SERVER,
-      };
-      return config;
-    } catch (error) {
-      this.setState({
-        error: true,
-        errorMessage: `There was an error: ${error}`,
-      });
-    }
-  };
+  // retrieveJWTToken = async () => {
+  //   try {
+  //     let { getIdTokenClaims } = this.props.auth0;
+  //     let tokenClaims = await getIdTokenClaims();
+  //     let jwt = tokenClaims.__raw;
+  //     let config = {
+  //       headers: { Authorization: `Bearer ${jwt}` },
+  //       baseURL: process.env.REACT_APP_BACKEND_SERVER,
+  //     };
+  //     return config;
+  //   } catch (error) {
+  //     this.setState({
+  //       error: true,
+  //       errorMessage: `There was an error: ${error}`,
+  //     });
+  //   }
+  // };
 
-  hoistInputFromMoviesForm = inputfromform => {
-    if (inputfromform === '') {
-      alert('Please enter a movie you d like to search for');
-    } else {
-      this.setState({
-        searchInput: inputfromform,
-        hasSearched: true,
-        error: false,
-        errorMessage: '',
-      });
-      this.apiCallTMDB(inputfromform);
-    }
-  };
+  // hoistInputFromMoviesForm = inputfromform => {
+  //   if (inputfromform === '') {
+  //     alert('Please enter a movie you d like to search for');
+  //   } else {
+  //     this.setState({
+  //       searchInput: inputfromform,
+  //       hasSearched: true,
+  //       error: false,
+  //       errorMessage: '',
+  //     });
+  //     this.apiCallTMDB(inputfromform);
+  //   }
+  // };
 
   hoistError = error => {
     this.setState({
@@ -76,47 +73,55 @@ class App extends React.Component {
     });
   };
 
-  apiCallTMDB = async searchInput => {
-    this.setState({ loading: true });
-    try {
-      let resultsFromServer = await axios.get(
-        `${process.env.REACT_APP_BACKEND_SERVER}/movies?movieName=${searchInput}`
-      );
-      if (resultsFromServer.status === 200) {
-        this.setState({
-          resultsFromServer: resultsFromServer.data,
-          status: resultsFromServer.status,
-        });
-      }
-    } catch (error) {
-      console.log('we are inside of error catch');
-      this.setState({
-        error: true,
-        errorMessage: `There was an error: ${error}`,
-      });
-    }
-    setTimeout(() => this.setState({ loading: false }), 1000);
+  hoistResultsFromAPI = resultsArray => {
+    this.setState({
+      error: false,
+      errorMessage: '',
+      resultsFromServer: resultsArray,
+    });
   };
 
-  addToFavoriteMoviesLIST = movieObj => {
-    if (
-      !this.state.myFavoriteMoviesList.length ||
-      !this.state.myFavoriteMoviesList.includes(movieObj)
-    ) {
-      this.setState({
-        saving2List: true,
-        myFavoriteMoviesList: [...this.state.myFavoriteMoviesList, movieObj],
-      });
-      setTimeout(() => this.setState({ saving2List: false }), 3000);
-    }
-  };
-  removeFromFavoriteMoviesLIST = movieObj => {
-    let newFavoriteMoviesList = [...this.state.myFavoriteMoviesList];
-    newFavoriteMoviesList = newFavoriteMoviesList.filter(
-      item => item.title !== movieObj.title
-    );
-    this.setState({ myFavoriteMoviesList: newFavoriteMoviesList });
-  };
+  // apiCallTMDB = async searchInput => {
+  //   this.setState({ loading: true });
+  //   try {
+  //     let resultsFromServer = await axios.get(
+  //       `${process.env.REACT_APP_BACKEND_SERVER}/movies?movieName=${searchInput}`
+  //     );
+  //     if (resultsFromServer.status === 200) {
+  //       this.setState({
+  //         resultsFromServer: resultsFromServer.data,
+  //         status: resultsFromServer.status,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log('we are inside of error catch');
+  //     this.setState({
+  //       error: true,
+  //       errorMessage: `There was an error: ${error}`,
+  //     });
+  //   }
+  //   setTimeout(() => this.setState({ loading: false }), 1000);
+  // };
+
+  // addToFavoriteMoviesLIST = movieObj => {
+  //   if (
+  //     !this.state.myFavoriteMoviesList.length ||
+  //     !this.state.myFavoriteMoviesList.includes(movieObj)
+  //   ) {
+  //     this.setState({
+  //       saving2List: true,
+  //       myFavoriteMoviesList: [...this.state.myFavoriteMoviesList, movieObj],
+  //     });
+  //     setTimeout(() => this.setState({ saving2List: false }), 3000);
+  //   }
+  // };
+  // removeFromFavoriteMoviesLIST = movieObj => {
+  //   let newFavoriteMoviesList = [...this.state.myFavoriteMoviesList];
+  //   newFavoriteMoviesList = newFavoriteMoviesList.filter(
+  //     item => item.title !== movieObj.title
+  //   );
+  //   this.setState({ myFavoriteMoviesList: newFavoriteMoviesList });
+  // };
 
   addComment = (comment, movieObj) => {
     let newFavoriteMoviesList = [...this.state.myFavoriteMoviesList];
@@ -128,13 +133,13 @@ class App extends React.Component {
     this.setState({ myFavoriteMoviesList: newFavoriteMoviesList });
   };
 
-  openModal = () => {
-    this.setState({ showModal: true });
-  };
+  // openModal = () => {
+  //   this.setState({ showModal: true });
+  // };
 
-  closeModal = () => {
-    this.setState({ showModal: false });
-  };
+  // closeModal = () => {
+  //   this.setState({ showModal: false });
+  // };
 
   loginUser = userFromLogoutBtn => {
     this.setState({ user: userFromLogoutBtn });
@@ -201,17 +206,21 @@ class App extends React.Component {
           ) : (
             ''
           )}
-          <MoviesParentComponent />
+
           <Routes>
             <Route
               path='/'
               element={
                 <>
+                  <MoviesParentComponent
+                    hoistResultsFromAPI={this.hoistResultsFromAPI}
+                    resultsFromServer={this.state.resultsFromServer}
+                  />
                   {/* <Form
                     hoistInputFromMoviesForm={this.hoistInputFromMoviesForm}
                     user={user}
                   /> */}
-                  {this.state.loading ? (
+                  {/* {this.state.loading ? (
                     <ApiLoadingModal
                       openModal={this.openModal}
                       closeModal={this.closeModal}
@@ -220,8 +229,8 @@ class App extends React.Component {
                     />
                   ) : (
                     ''
-                  )}
-                  {this.state.resultsFromServer.length > 0 ? (
+                  )} */}
+                  {/* {this.state.resultsFromServer.length > 0 ? (
                     <MovieResultsFromAPI
                       results={this.state.resultsFromServer}
                       add={this.addToFavoriteMoviesLIST}
@@ -231,7 +240,7 @@ class App extends React.Component {
                     />
                   ) : (
                     ''
-                  )}
+                  )} */}
                 </>
               }
             />
