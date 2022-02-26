@@ -2,11 +2,26 @@
   text-align: center;
 }
 
-div.loginButtonStartpage {
+.loginButtonStartpage {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+}
+
+.loginButtonStartpage div.modal-footer {
+  background-color: orange;
+  border-radius: 5px;
+  padding: 1rem;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.loginButtonStartpage img.auth0Logo {
+  width: 30%;
+  margin: 1rem 0 0 0;
 }
 
 div.testButton {

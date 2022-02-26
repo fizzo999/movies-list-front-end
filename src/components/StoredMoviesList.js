@@ -4,12 +4,9 @@ import CardGroup from 'react-bootstrap/CardGroup';
 import Movie from './Movie.js';
 import { withAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
+import UpdateMovieModal from './UpdateMovieModal.js';
 
 class StoredMoviesList extends Component {
-  // ADD THE EMAIL ADDRESS INTO STATE AND USE IT FOR EVERY REQUEST ???
-
-  // ADD JWT TOKEN TO EVERY REQUEST ????
-
   constructor(props) {
     super(props);
     this.state = {
@@ -41,16 +38,22 @@ class StoredMoviesList extends Component {
   componentDidMount = async () => {
     try {
       let results = await this.makeAnyRequest('get', '/dbmovies');
-      console.log(
-        'here is the inital results from component did mount ========>>>>>>>>',
-        results.data
-      );
-      if (results) {
+      // console.log(
+      //   'here is the inital results from component did mount ========>>>>>>>>',
+      //   results.data
+      // );
+      if (results && results.data.length > 0) {
         this.setState({
           moviesDB: results.data,
         });
         this.props.hoistResultsFromDB(results.data);
-        // do we need to hoist the movies into state of App as well ??? since the add movie button is inside of app ????
+      } else if (results && results.data.length === 0) {
+        await this.makeAnyRequest('get', '/seed');
+        let results = await this.makeAnyRequest('get', '/dbmovies');
+        this.setState({
+          moviesDB: results.data,
+        });
+        this.props.hoistResultsFromDB(results.data);
       }
     } catch (error) {
       console.log(error);
@@ -64,33 +67,14 @@ class StoredMoviesList extends Component {
     });
   };
 
-  // addMovie = async movie => {
-  //   try {
-  //     let results = await this.makeAnyRequest('post', '/dbmovies');
-  //     if (results) {
-  //       console.log('successfully added ONE movie to DB !!!');
-  //       this.setState({
-  //         moviesDB: [...this.state.moviesDB, results.data],
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     this.props.hoistError(error);
-  //   }
-  // };
-
   deleteMovie = async id => {
     try {
-      let results = await this.makeAnyRequest('/delete', `/dbmovies/${id}`, {});
+      let results = await this.makeAnyRequest('delete', `/dbmovies/${id}`, {});
       if (results) {
-        console.log(
-          'here is the deleted movie obj response from the server',
-          results.data
-        );
-        // HAVE TO MAKE SURE THAT THE MOVIE OBJ CONTAINS AN ID FIELD AND THAT IT IS _ID AND NOT ID  ??????
         let newMovieArray = this.state.moviesDB.filter(
           movie => movie._id !== results.data._id
         );
+        this.props.hoistResultsFromDB(newMovieArray);
         this.setState({ moviesDB: newMovieArray });
       }
     } catch (error) {
@@ -100,19 +84,30 @@ class StoredMoviesList extends Component {
   };
 
   setMovieForModal = movie => {
+    console.log(
+      'we are inside the setMovieForModal function inside of StoredMoviesList',
+      movie
+    );
     if (movie) {
       this.setState({
+        openModalToAddMovieComment: true,
         selectedMovie: movie,
       });
     }
   };
 
   updateMovie = async movieToUpdate => {
-    this.openCloseModal();
+    console.log(
+      'we made it up to StoredMoviesList - yay - and here is movieToUpdate',
+      movieToUpdate
+    );
+    this.setState({
+      openModalToAddMovieComment: false,
+    });
     try {
       let results = await this.makeAnyRequest(
         'put',
-        `/dbmovies/:${movieToUpdate._id}`,
+        `/dbmovies/${movieToUpdate._id}`,
         movieToUpdate
       );
       console.log(
@@ -122,6 +117,7 @@ class StoredMoviesList extends Component {
       let newMovieArray = this.state.moviesDB.map(movie =>
         movie._id === movieToUpdate._id ? movieToUpdate : movie
       );
+      this.props.hoistResultsFromDB(newMovieArray);
       this.setState({
         moviesDB: newMovieArray,
       });
@@ -134,29 +130,22 @@ class StoredMoviesList extends Component {
   render() {
     // console.log(
     //   'inside storedMoviesList.js - and here is state',
-    //   this.state.moviesDB
+    //   this.state.selectedMovie,
+    //   this.state.openModalToAddMovieComment
     // );
     let moviesComponentArray = [];
-    // let newFavoriteMovieList;
     if (this.state.moviesDB.length) {
-      // if (this.state.moviesDB.length > 1) {
-      //   newFavoriteMovieList = [...this.state.moviesDB];
-      //   newFavoriteMovieList = newFavoriteMovieList.slice(1);
-      //   console.log(
-      //     'we are in StoredMoviesList and here is newFavoriteMovieList',
-      //     newFavoriteMovieList
-      //   );
-      //   moviesComponentArray = newFavoriteMovieList.map((movie, index) => {
       moviesComponentArray = this.state.moviesDB.map((movie, index) => {
         return (
           <Movie
             key={`db-movie-${index}`}
-            // add={this.props.add}
-            remove={this.props.remove}
+            // remove={this.props.remove}
+            deleteMovie={this.deleteMovie}
             movieObj={movie}
             included={true}
             addComment={this.props.addComment}
             setMovieForModal={this.setMovieForModal}
+            openModalToAddMovieComment={this.state.openModalToAddMovieComment}
           />
         );
       });
@@ -166,7 +155,20 @@ class StoredMoviesList extends Component {
         <CardGroup>
           <React.Fragment>
             {this.state.moviesDB ? (
-              moviesComponentArray
+              this.state.openModalToAddMovieComment ? (
+                <UpdateMovieModal
+                  updateMovie={this.updateMovie}
+                  selectedMovie={this.state.selectedMovie}
+                  openModal={() =>
+                    this.setState({ openModalToAddMovieComment: true })
+                  }
+                  closeModal={() =>
+                    this.setState({ openModalToAddMovieComment: false })
+                  }
+                />
+              ) : (
+                moviesComponentArray
+              )
             ) : (
               <h3>
                 no movies in your LIST yet - go to home, search and click on add

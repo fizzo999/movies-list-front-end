@@ -5,7 +5,7 @@ export class AboutMoviesListComponent extends Component {
   render() {
     return (
       <Container fluid='md' maxwidth='sm'>
-        <div>AboutMoviesListComponent</div>
+        <h1>AboutMoviesListComponent</h1>
       </Container>
     );
   }

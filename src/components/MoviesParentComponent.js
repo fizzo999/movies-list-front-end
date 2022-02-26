@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { withAuth0 } from '@auth0/auth0-react';
+import { Navigate } from 'react-router-dom';
 import Form from './Form.js';
 import ApiLoadingModal from './Modal.js';
+import AlertModal from './Modal.js';
 import MovieResultsFromAPI from './MyMoviesListComponent.js';
 
 import axios from 'axios';
@@ -14,14 +16,13 @@ export class MoviesParentComponent extends Component {
       loading: false,
       showModal: false,
       saving2List: false,
-      hasSearched: false,
       resultsFromServer: this.props.resultsFromServer,
       status: null,
       movieResultsShowing: false,
       myFavoriteMoviesList: [],
-      error: false,
-      errorMessage: '',
       moviesDB: this.props.moviesDB,
+      alertModal: false,
+      hasSaved2List: false,
     };
   }
   hoistInputFromMoviesForm = inputfromform => {
@@ -30,9 +31,6 @@ export class MoviesParentComponent extends Component {
     } else {
       this.setState({
         searchInput: inputfromform,
-        hasSearched: true,
-        error: false,
-        errorMessage: '',
       });
       this.apiCallTMDB(inputfromform);
     }
@@ -52,54 +50,50 @@ export class MoviesParentComponent extends Component {
         this.props.hoistResultsFromAPI(resultsFromServer.data);
       }
     } catch (error) {
-      console.log('we are inside of error catch');
-      this.setState({
-        error: true,
-        errorMessage: `There was an error: ${error}`,
-      });
+      console.log(error);
+      this.props.hoistError(error);
     }
     setTimeout(() => this.setState({ loading: false }), 1000);
   };
 
-  addToFavoriteMoviesLIST = movieObj => {
+  addMovie = async movie => {
     if (
-      !this.state.myFavoriteMoviesList.length ||
-      !this.state.myFavoriteMoviesList.includes(movieObj)
+      this.state.moviesDB.filter(
+        eachMovie =>
+          eachMovie.title === movie.title &&
+          eachMovie.overview === movie.overview
+      ).length === 0
     ) {
       this.setState({
         saving2List: true,
-        myFavoriteMoviesList: [...this.state.myFavoriteMoviesList, movieObj],
       });
-      setTimeout(() => this.setState({ saving2List: false }), 3000);
-    }
-  };
-
-  addMovie = async movie => {
-    try {
-      let { user } = this.props.auth0;
-      movie.email = user.email;
-      console.log(
-        'well here is this.props.moviesDB object with user email',
-        this.props.moviesDB
-      );
-      let results = await this.props.makeAnyRequest('post', '/dbmovies', movie);
-      if (results) {
-        let newMoviesDB = [...this.props.moviesDB, results.data];
-        console.log('successfully added ONE movie to DB !!!');
-        this.props.hoistResultsFromDB(newMoviesDB);
+      try {
+        let { user } = this.props.auth0;
+        movie.email = user.email;
+        let results = await this.props.makeAnyRequest(
+          'post',
+          '/dbmovies',
+          movie
+        );
+        if (results) {
+          let newMoviesDB = [...this.props.moviesDB, results.data];
+          this.props.hoistResultsFromDB(newMoviesDB);
+        }
+        setTimeout(
+          () => this.setState({ saving2List: false, hasSaved2List: true }),
+          3000
+        );
+        // window.location.href = `http://localhost:3000/myMoviesList`;
+        // window.location.assign(`http://localhost:3000/myMoviesList`);
+      } catch (error) {
+        console.log(error);
+        this.props.hoistError(error);
       }
-    } catch (error) {
-      console.log(error);
-      this.props.hoistError(error);
+    } else {
+      console.log('we already have this !!!!============================');
+      this.setState({ alertModal: true });
+      setTimeout(() => this.setState({ alertModal: false }), 3000);
     }
-  };
-
-  removeFromFavoriteMoviesLIST = movieObj => {
-    let newFavoriteMoviesList = [...this.state.myFavoriteMoviesList];
-    newFavoriteMoviesList = newFavoriteMoviesList.filter(
-      item => item.title !== movieObj.title
-    );
-    this.setState({ myFavoriteMoviesList: newFavoriteMoviesList });
   };
 
   openModal = () => {
@@ -130,6 +124,16 @@ export class MoviesParentComponent extends Component {
         ) : (
           ''
         )}
+        {this.state.alertModal ? (
+          <AlertModal
+            openModal={this.openModal}
+            closeModal={this.closeModal}
+            modalHeaderText={'alert'}
+            modalLoadingText={'YOU ALREADY HAVE THIS MOVIE IN YOUR LIST'}
+          />
+        ) : (
+          ''
+        )}
         {this.state.resultsFromServer.length > 0 ? (
           <MovieResultsFromAPI
             results={this.state.resultsFromServer}
@@ -141,6 +145,7 @@ export class MoviesParentComponent extends Component {
         ) : (
           ''
         )}
+        {this.state.hasSaved2List ? <Navigate to='/myMoviesList' /> : ''}
       </React.Fragment>
     );
   }

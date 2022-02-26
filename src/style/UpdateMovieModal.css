@@ -1,0 +1,41 @@
+.modalHeader,
+div.modal-body,
+div.modal-body div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  text-align: center;
+}
+
+.modalHeader img {
+  width: 60%;
+}
+
+input,
+label {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+div.modal-body h5,
+div.modal-body label,
+div.modal-body input {
+  margin: 0.4rem 0;
+}
+
+div.modalHeader.modal-header {
+  align-items: center;
+}
+
+input[type='textarea']#overview,
+input[type='text']#comment p {
+  height: 200px;
+  width: 100%;
+  line-height: 12px;
+  padding: 0;
+  background-color: rgba(255, 166, 0, 0.186);
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  word-break: break-word !important;
+}

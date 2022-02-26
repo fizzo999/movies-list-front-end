@@ -21,22 +21,41 @@ class LoadingModal extends Component {
           </Modal.Header>
           <Modal.Body>
             <div className='btnContainer'>
-              <Button
-                variant='success'
-                disabled
-                size='lg'
-                className='btn btn-success btn-lg spinnerBtn'
-              >
-                <Spinner
-                  as='span'
-                  animation='border'
-                  size='xlg'
-                  role='status'
-                  aria-hidden='true'
-                />
-                <span className='visually-hidden'>Loading...</span>
-                {this.props.modalLoadingText}
-              </Button>
+              {this.props.modalHeaderText === 'alert' ? (
+                <Button
+                  variant='danger'
+                  disabled
+                  size='lg'
+                  className='btn btn-success btn-lg spinnerBtn'
+                >
+                  <Spinner
+                    as='span'
+                    animation='border'
+                    size='xlg'
+                    role='status'
+                    aria-hidden='true'
+                  />
+                  <span className='visually-hidden'>Loading...</span>
+                  {this.props.modalLoadingText}
+                </Button>
+              ) : (
+                <Button
+                  variant='success'
+                  disabled
+                  size='lg'
+                  className='btn btn-success btn-lg spinnerBtn'
+                >
+                  <Spinner
+                    as='span'
+                    animation='border'
+                    size='xlg'
+                    role='status'
+                    aria-hidden='true'
+                  />
+                  <span className='visually-hidden'>Loading...</span>
+                  {this.props.modalLoadingText}
+                </Button>
+              )}
             </div>
           </Modal.Body>
           <Modal.Footer></Modal.Footer>
