@@ -128,11 +128,11 @@ class StoredMoviesList extends Component {
   };
 
   render() {
-    // console.log(
-    //   'inside storedMoviesList.js - and here is state',
-    //   this.state.selectedMovie,
-    //   this.state.openModalToAddMovieComment
-    // );
+    console.log(
+      'inside storedMoviesList.js - and here is state',
+      this.state.selectedMovie,
+      this.state.openModalToAddMovieComment
+    );
     let moviesComponentArray = [];
     if (this.state.moviesDB.length) {
       moviesComponentArray = this.state.moviesDB.map((movie, index) => {

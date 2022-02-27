@@ -21,7 +21,7 @@
 
 .loginButtonStartpage img.auth0Logo {
   width: 30%;
-  margin: 1rem 0 0 0;
+  margin: 1rem auto 0 auto;
 }
 
 div.testButton {

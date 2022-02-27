@@ -5,13 +5,13 @@ import '../style/Movie.css';
 import MovieSaving2ListModal from './Modal.js';
 
 class Movie extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      comment: '',
-      hasComment: false,
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     comment: '',
+  //     hasComment: false,
+  //   };
+  // }
 
   // captureTypedInput = e => {
   //   e.preventDefault();
@@ -36,9 +36,7 @@ class Movie extends Component {
             openModal={this.props.openModal}
             closeModal={this.props.closeModal}
             modalHeaderText={'saving movie to your LIST'}
-            modalLoadingText={
-              'SAVING YOUR MOVIE CLICK ON my favorite movies LIST button in the nav bar to see your list'
-            }
+            modalLoadingText={'...redirecting you to your LIST of saved movies'}
           />
         ) : (
           ''

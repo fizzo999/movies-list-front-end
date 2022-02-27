@@ -73,23 +73,31 @@ class UpdateMovieModal extends Component {
           </Modal.Header>
           <Modal.Body>
             <Form onSubmit={this.handleSubmit}>
-              <Form.Group controlId='title'>
+              <h4>Movie TITLE: </h4>
+              <h2>{this.props.selectedMovie.title}</h2>
+              {/* <Form.Group controlId='title'>
                 <Form.Label>Movie Title</Form.Label>
                 <Form.Control
                   type='text'
                   onChange={e => this.handleChange(e, 'title')}
                   defaultValue={this.props.selectedMovie.title}
                 />
-              </Form.Group>
-              <Form.Group controlId='overview'>
+              </Form.Group> */}
+              {/* <Form.Group controlId='overview'>
                 <Form.Label>Movie overview</Form.Label>
                 <Form.Control
                   type='textarea'
                   onChange={e => this.handleChange(e, 'overview')}
                   defaultValue={this.props.selectedMovie.overview}
                 />
-              </Form.Group>
-              {/* <Form.Group controlId='average_votes'>
+              </Form.Group> */}
+              <h5>overview:</h5>
+              <textarea
+                onChange={e => this.handleChange(e, 'overview')}
+                defaultValue={this.props.selectedMovie.overview}
+              ></textarea>
+              <div className='unchangeables'>
+                {/* <Form.Group controlId='average_votes'>
                 <Form.Label>Movie average votes</Form.Label>
                 <Form.Control
                   type='text'
@@ -97,18 +105,20 @@ class UpdateMovieModal extends Component {
                   defaultValue={this.props.selectedMovie.average_votes}
                 />
               </Form.Group> */}
-              <h5>
-                Movie average votes: {this.props.selectedMovie.average_votes}
-              </h5>
-              {/* <Form.Group controlId='total_votes'>
+                <h5>
+                  Movie average votes: {this.props.selectedMovie.average_votes}
+                </h5>
+                {/* <Form.Group controlId='total_votes'>
                 <Form.Label>Movie total votes</Form.Label>
                 <Form.Control
                   type='text'
                   onChange={e => this.handleChange(e, 'total_votes')}
                   defaultValue={this.props.selectedMovie.total_votes}
                 /></Form.Group> */}
-              <h5>Movie total votes: {this.props.selectedMovie.total_votes}</h5>
-              {/* <Form.Group controlId='popularity'>
+                <h5>
+                  Movie total votes: {this.props.selectedMovie.total_votes}
+                </h5>
+                {/* <Form.Group controlId='popularity'>
                 <Form.Label>Movie popularity</Form.Label>
                 <Form.Control
                   type='text'
@@ -116,8 +126,8 @@ class UpdateMovieModal extends Component {
                   defaultValue={this.props.selectedMovie.popularity}
                 ></Form.Control>
               </Form.Group> */}
-              <h5>Movie popularity: {this.props.selectedMovie.popularity}</h5>
-              {/* <Form.Group controlId='released_on'>
+                <h5>Movie popularity: {this.props.selectedMovie.popularity}</h5>
+                {/* <Form.Group controlId='released_on'>
                 <Form.Label>Movie released on</Form.Label>
                 <Form.Control
                   type='text'
@@ -125,8 +135,10 @@ class UpdateMovieModal extends Component {
                   defaultValue={this.props.selectedMovie.released_on}
                 ></Form.Control>
               </Form.Group> */}
-              <h5>Movie released on: {this.props.selectedMovie.released_on}</h5>
-              {/* <Form.Group controlId='tmdbID'>
+                <h5>
+                  Movie released on: {this.props.selectedMovie.released_on}
+                </h5>
+                {/* <Form.Group controlId='tmdbID'>
                 <Form.Label>Movie tmdb ID</Form.Label>
                 <Form.Control
                   type='text'
@@ -134,15 +146,21 @@ class UpdateMovieModal extends Component {
                   defaultValue={this.props.selectedMovie.tmdbID}
                 ></Form.Control>
               </Form.Group> */}
-              <h5>Movie tmdb ID: {this.props.selectedMovie.tmdbID}</h5>
-              <Form.Group controlId='comment'>
+                <h5>Movie tmdb ID: {this.props.selectedMovie.tmdbID}</h5>
+                {/* <Form.Group controlId='comment'>
                 <Form.Label>Movie comment</Form.Label>
                 <Form.Control
                   type='text'
                   onChange={e => this.handleChange(e, 'comment')}
                   defaultValue={this.props.selectedMovie.comment}
                 ></Form.Control>
-              </Form.Group>
+              </Form.Group> */}
+              </div>
+              <h5>comment:</h5>
+              <textarea
+                onChange={e => this.handleChange(e, 'comment')}
+                defaultValue={this.props.selectedMovie.comment}
+              ></textarea>
               {/* <Form.Group controlId='popularity'>
                 <Form.Label>Movie popularity</Form.Label>
                 <Form.Control
