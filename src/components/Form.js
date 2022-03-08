@@ -13,12 +13,17 @@ class Form extends React.Component {
   handleChange = e => {
     const userInput = e.target.value;
     this.setState({ movieSearch: userInput });
+    // console.log('here is the userInput from state', userInput);
     this.renderUserInput(userInput);
   };
 
   handleSubmit = e => {
     e.preventDefault();
     this.setState({ movieSearch: e.target.moviesinput.value });
+    console.log(
+      'we are in From element and here is e.target.moviesinput.value',
+      e.target.moviesinput.value
+    );
     this.props.hoistInputFromMoviesForm(e.target.moviesinput.value);
   };
 
@@ -31,7 +36,7 @@ class Form extends React.Component {
   render() {
     return (
       <Container fluid='md' maxwidth='sm'>
-        <h3>Form</h3>
+        {this.props.user ? <h3>hello, {this.props.user.name} !</h3> : ''}
         <h3>
           what we are currently searching for:{' '}
           <span id='user-input'>nothing yet</span>
@@ -43,8 +48,6 @@ class Form extends React.Component {
             <legend>
               Please type a search term in the input field to look for movies
             </legend>
-            {/* <label htmlFor='movies-input'>enter your movie search here</label>
-            <br /> */}
             <input
               type='text'
               id='movies-input'

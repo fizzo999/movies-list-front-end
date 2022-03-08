@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Container from 'react-bootstrap/Container';
 import CardGroup from 'react-bootstrap/CardGroup';
+// import Row from 'react-bootstrap/Row';
 import Movie from './Movie.js';
 
 class MyMoviesListComponent extends Component {
   render() {
     let moviesComponentArray = [];
-    if (this.props.results.length > 1) {
+    if (this.props.results.length > 0) {
       moviesComponentArray = this.props.results.map((movie, index) => {
         return (
           <Movie
@@ -21,11 +21,11 @@ class MyMoviesListComponent extends Component {
       });
     }
     return (
-      <Container>
-        <CardGroup>
-          <React.Fragment>{moviesComponentArray}</React.Fragment>
-        </CardGroup>
-      </Container>
+
+      <CardGroup>
+        {moviesComponentArray}
+      </CardGroup>
+
     );
   }
 }

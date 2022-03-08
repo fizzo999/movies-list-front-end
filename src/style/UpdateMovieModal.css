@@ -1,0 +1,71 @@
+.modalHeader,
+div.modal-body,
+div.modal-body div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  text-align: center;
+}
+
+.modalHeader img {
+  width: 60%;
+}
+
+input,
+label {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+div.modal-body h5,
+div.modal-body label,
+div.modal-body input {
+  margin: 0.4rem 0;
+}
+
+div.modalHeader.modal-header {
+  align-items: center;
+}
+
+input[type='textarea']#overview,
+input[type='text']#comment,
+input[defaultValue]#overview,
+input[defaultValue]#comment {
+  /* display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center; */
+  /* height: 200px;
+  width: 100%;
+  line-height: 12px;
+  overflow: visible;
+  padding: 0 1rem;
+  background-color: rgba(255, 166, 0, 0.186);
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  word-break: break-word !important; */
+}
+
+textarea {
+  background-color: rgba(229, 255, 0, 0.152);
+  border-radius: 5px;
+  text-align: justify;
+  width: 100%;
+  height: 300px;
+  padding: 1rem;
+  border: none;
+  box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+}
+
+div.unchangeables {
+  margin: 2rem 0;
+  background-color: rgb(253, 187, 253);
+  border-radius: 5px;
+  padding: 1rem 0;
+  box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+}
+
+div.unchangeables h5 {
+  margin: 0.5rem 0;
+}

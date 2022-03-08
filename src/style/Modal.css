@@ -6,8 +6,10 @@ div.btnContainer {
   width: 100%;
 }
 
-.modalHeader {
+.modalHeader
+div.modalHeader.modal-header {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
