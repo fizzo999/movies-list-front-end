@@ -1,33 +1,14 @@
-// import React, { Component } from 'react';
-
-// class AboutMichellePannoschComponent extends Component {
-//   render() {
-//     return <div>AboutMichellePannoschComponent</div>;
-//   }
-// }
-
-// export default AboutMichellePannoschComponent;
-
 import React from 'react';
-// import { Container, Spinner } from 'react-bootstrap';
 import { Container } from 'react-bootstrap';
-// import { useAuth0 } from '@auth0/auth0-react';
 import github from '../assets/gh.png';
 import linkedin from '../assets/li.png';
 import '../style/AboutMichellePannosch.css';
 
-const AboutMichellePannoschComponent = () => {
-  // const { isAuthenticated, isLoading } = useAuth0();
-  // if (isLoading) {
-  //   return <Spinner animation='border' />;
-  // }
-
+const AboutMichellePannosch = () => {
   return (
-    // isAuthenticated && (
     <Container fluid='md' maxwidth='sm'>
-      <h1>About Michelle Pannosch</h1>
       <h2>Hover over the image to learn more about Michelle</h2>
-      <section className='about-us-wrapper'>
+      <section className='about-Michelle-wrapper'>
         <div className='about-card-container'>
           <div className='about-card'>
             <div className='side Michelle_001'></div>
@@ -66,7 +47,6 @@ const AboutMichellePannoschComponent = () => {
       </section>
     </Container>
   );
-  // );
 };
 
-export default AboutMichellePannoschComponent;
+export default AboutMichellePannosch;

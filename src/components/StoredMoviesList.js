@@ -84,10 +84,10 @@ class StoredMoviesList extends Component {
   };
 
   setMovieForModal = movie => {
-    console.log(
-      'we are inside the setMovieForModal function inside of StoredMoviesList',
-      movie
-    );
+    // console.log(
+    //   'we are inside the setMovieForModal function inside of StoredMoviesList',
+    //   movie
+    // );
     if (movie) {
       this.setState({
         openModalToAddMovieComment: true,
@@ -128,22 +128,21 @@ class StoredMoviesList extends Component {
   };
 
   render() {
-    console.log(
-      'inside storedMoviesList.js - and here is state',
-      this.state.selectedMovie,
-      this.state.openModalToAddMovieComment
-    );
+    // console.log(
+    //   'inside storedMoviesList.js - and here is state for moviesDB',
+    //   this.state.moviesDB
+    // );
     let moviesComponentArray = [];
     if (this.state.moviesDB.length) {
       moviesComponentArray = this.state.moviesDB.map((movie, index) => {
         return (
           <Movie
+            addComment={this.props.addComment}
+            remove={this.props.remove}
             key={`db-movie-${index}`}
-            // remove={this.props.remove}
             deleteMovie={this.deleteMovie}
             movieObj={movie}
             included={true}
-            addComment={this.props.addComment}
             setMovieForModal={this.setMovieForModal}
             openModalToAddMovieComment={this.state.openModalToAddMovieComment}
           />
@@ -152,31 +151,31 @@ class StoredMoviesList extends Component {
     }
     return (
       <Container fluid>
-        <CardGroup>
-          <React.Fragment>
-            {this.state.moviesDB ? (
-              this.state.openModalToAddMovieComment ? (
-                <UpdateMovieModal
-                  updateMovie={this.updateMovie}
-                  selectedMovie={this.state.selectedMovie}
-                  openModal={() =>
-                    this.setState({ openModalToAddMovieComment: true })
-                  }
-                  closeModal={() =>
-                    this.setState({ openModalToAddMovieComment: false })
-                  }
-                />
-              ) : (
-                moviesComponentArray
-              )
+        <React.Fragment>
+          {this.state.moviesDB ? (
+            this.state.openModalToAddMovieComment ? (
+              <UpdateMovieModal
+                updateMovie={this.updateMovie}
+                selectedMovie={this.state.selectedMovie}
+                openModal={() =>
+                  this.setState({ openModalToAddMovieComment: true })
+                }
+                closeModal={() =>
+                  this.setState({ openModalToAddMovieComment: false })
+                }
+              />
             ) : (
-              <h3>
-                no movies in your LIST yet - go to home, search and click on add
-                movies button
-              </h3>
-            )}
-          </React.Fragment>
-        </CardGroup>
+              <CardGroup>
+                {moviesComponentArray}
+              </CardGroup>
+            )
+          ) : (
+            <h3>
+              no movies in your LIST yet - go to home, search and click on add
+              movies button
+            </h3>
+          )}
+        </React.Fragment>
       </Container>
     );
   }

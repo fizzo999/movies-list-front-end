@@ -1,40 +1,38 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import LoginButton from './LoginButton.js';
 import LogoutButton from './LogoutButton.js';
 import '../style/Header.css';
 
-class Header extends React.Component {
+class Header extends Component {
   render() {
     return (
-      <Container fluid='md' maxwidth='sm'>
+      <Container fluid='md'>
         <nav>
-          <h1>My all times favorite movies LIST</h1>
+          <h1>My All Times Favorite Movies LIST</h1>
           <ul>
             {this.props.isAuthenticated ? (
-              <LogoutButton
-                className='logoutButton'
-                logoutUser={this.props.logoutUser}
-                loginUser={this.props.loginUser}
-              />
+              <li>
+                <LogoutButton className='logoutButton' logoutUser={this.props.logoutUser}
+                  loginUser={this.props.loginUser} />
+              </li>
             ) : (
-              <LoginButton className='commentBtnActive' />
+              <li>
+                <LoginButton className='commentBtnActive' />
+              </li>
             )}
-
             <li>
               <Link to='/'>Home</Link>
             </li>
             <li>
-              <Link to='/aboutMoviesList'>
-                about this App - my favorite movies LIST
-              </Link>
+              <Link to='about'>about this APP</Link>
             </li>
             <li>
-              <Link to='/aboutMichellePannosch'>about Michelle Pannosch</Link>
+              <Link to='aboutMichellePannosch'>about Michelle Pannosch</Link>
             </li>
             <li>
-              <Link to='/myMoviesList'>my favorite movies LIST</Link>
+              <Link to='MoviesList'>my Favorite Movies LIST</Link>
             </li>
           </ul>
         </nav>
@@ -42,5 +40,4 @@ class Header extends React.Component {
     );
   }
 }
-
 export default Header;

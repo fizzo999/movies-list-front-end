@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import Form from './Form.js';
 import ApiLoadingModal from './Modal.js';
 import AlertModal from './Modal.js';
-import MovieResultsFromAPI from './MyMoviesListComponent.js';
+import MovieResultsFromAPI from './MoviesList.js';
 
 import axios from 'axios';
 
@@ -19,7 +19,7 @@ export class MoviesParentComponent extends Component {
       resultsFromServer: this.props.resultsFromServer,
       status: null,
       movieResultsShowing: false,
-      myFavoriteMoviesList: [],
+      // myFavoriteMoviesList: [],
       moviesDB: this.props.moviesDB,
       alertModal: false,
       hasSaved2List: false,
@@ -145,7 +145,8 @@ export class MoviesParentComponent extends Component {
         ) : (
           ''
         )}
-        {this.state.hasSaved2List ? <Navigate to='/myMoviesList' /> : ''}
+        {/* the following <Navigate /> tag that comes from react-router-dom allows us to redirect the user to the list of db stored movies so user can see that the saving to db action was successful */}
+        {this.state.hasSaved2List ? <Navigate to='/MoviesList' /> : ''}
       </React.Fragment>
     );
   }

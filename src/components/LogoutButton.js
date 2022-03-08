@@ -20,3 +20,4 @@ const LogoutButton = props => {
 };
 
 export default LogoutButton;
+

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import LoginButton from './LoginButton.js';
 import movieProjector from '../assets/movie-projector.gif';
+import '../style/LoginModal.css';
 
 export class LoginModal extends Component {
   render() {
@@ -31,13 +32,6 @@ export class LoginModal extends Component {
                 src={'https://cdn.auth0.com/website/bob/press/logo-dark.png'}
                 alt={'logo of auth0 secure login provider'}
               />
-              {/* <div class="gradient-border" id="box">
-                Animated 
-                <br>
-                CSS
-                <br>
-                Gradient Border
-              </div> */}
             </Modal.Body>
             <Modal.Footer>
               <LoginButton />

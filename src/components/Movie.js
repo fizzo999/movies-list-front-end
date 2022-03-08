@@ -61,6 +61,9 @@ class Movie extends Component {
             <Card.Text>
               release date: {this.props.movieObj.released_on}
             </Card.Text>
+            <Card.Text>
+              email who added this movie: {this.props.movieObj.email}
+            </Card.Text>
           </Card.Body>
           <Card.Footer>
             {this.props.included ? (
@@ -85,7 +88,7 @@ class Movie extends Component {
                   }
                 >
                   {this.props.movieObj.comment ||
-                    'NO comment yet - click the yellow update button'}
+                    'NO comment yet - click the BLUE update button'}
                 </Card.Text>
               </>
             ) : (

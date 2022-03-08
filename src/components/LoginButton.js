@@ -6,14 +6,10 @@ import '../style/Movie.css';
 const LoginButton = () => {
   const { loginWithRedirect } = useAuth0();
 
-  const localLoginBtnHandler = () => {
-    loginWithRedirect();
-  };
-
   return (
     <Button
-      className='commentBtnActive btn '
-      onClick={() => localLoginBtnHandler()}
+      className='commentBtnActive btn'
+      onClick={() => loginWithRedirect()}
     >
       Please click to LogIn - you will be redirected to auth0
     </Button>
