@@ -1,0 +1,98 @@
+/* =====ABOUT Michelle Pannosch CARD FLIP===== */
+h1,
+h2,
+h4 {
+  text-align: center;
+  margin: 0.5em 0;
+}
+
+h2 {
+  margin-bottom: 0;
+}
+
+.about-Michelle-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.Michelle_001 {
+  background-image: url('../assets/Michelle_001.jpg');
+  background-size: cover;
+  border-radius: 5px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+.about-card-container {
+  height: 400px;
+  width: 400px;
+  margin: 30px;
+  perspective: 600;
+  position: relative;
+  justify-content: center;
+  display: flex;
+}
+.about-img {
+  height: 390px;
+  border-radius: 10px;
+}
+
+.about-card {
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: all 1s ease-in-out;
+  width: 100%;
+  border-radius: 10px;
+  border: thick black solid;
+  display: flex;
+}
+.about-card:hover {
+  transform: rotateY(180deg);
+}
+.about-card .side {
+  backface-visibility: hidden;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+.about-card .back {
+  transform: rotateY(180deg);
+  background: linear-gradient(purple, khaki);
+  color: white;
+  padding: 10px;
+  position: relative;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: justify;
+}
+
+.about-card h3 {
+  text-align: center;
+}
+
+.connect {
+  position: absolute;
+  bottom: 10px;
+  left: 120px;
+}
+
+img.social-icon {
+  transition: all 250ms;
+}
+
+img.social-icon:hover {
+  box-shadow: 0 0 55px 25px yellow;
+  border: solid 3px yellow;
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+.social-icon {
+  height: 40px;
+  margin: 8px;
+}

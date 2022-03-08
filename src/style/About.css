@@ -1,0 +1,12 @@
+.instructionsCards {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr) !important;
+  grid-gap: 3em;
+}
+
+.instructionsCards div.card-header {
+  background-color: rgb(255, 169, 236);
+}
+.instructionsCards div.card-footer {
+  background-color: rgb(255, 255, 169);
+}
