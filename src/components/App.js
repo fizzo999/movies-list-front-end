@@ -36,7 +36,7 @@ class App extends Component {
       let { getIdTokenClaims } = this.props.auth0;
       let tokenClaims = await getIdTokenClaims();
       let jwt = tokenClaims.__raw;
-      console.log('here is TOKEN ===========>>>>>>>>>>>>', jwt);
+      // console.log('here is TOKEN ===========>>>>>>>>>>>>', jwt);
       let config = {
         headers: { Authorization: `Bearer ${jwt}` },
         baseURL: process.env.REACT_APP_BACKEND_SERVER,
@@ -102,7 +102,6 @@ class App extends Component {
     this.setState({ showModal: false });
   };
 
-
   loginUser = userFromLogoutBtn => {
     this.setState({ user: userFromLogoutBtn });
   };
@@ -153,7 +152,10 @@ class App extends Component {
 
             <Route path='/about' element={<About />} />
 
-            <Route path='/aboutMichellePannosch' element={<AboutMichellePannosch />} />
+            <Route
+              path='/aboutMichellePannosch'
+              element={<AboutMichellePannosch />}
+            />
 
             <Route
               path='/MoviesList'
