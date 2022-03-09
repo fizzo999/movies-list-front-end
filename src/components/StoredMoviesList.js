@@ -37,7 +37,7 @@ class StoredMoviesList extends Component {
 
   componentDidMount = async () => {
     try {
-      let results = await this.makeAnyRequest('get', '/dbmovies');
+      let results = await this.props.makeAnyRequest('get', '/dbmovies');
       // console.log(
       //   'here is the inital results from component did mount ========>>>>>>>>',
       //   results.data
@@ -48,8 +48,8 @@ class StoredMoviesList extends Component {
         });
         this.props.hoistResultsFromDB(results.data);
       } else if (results && results.data.length === 0) {
-        await this.makeAnyRequest('get', '/seed');
-        let results = await this.makeAnyRequest('get', '/dbmovies');
+        await this.props.makeAnyRequest('get', '/seed');
+        let results = await this.props.makeAnyRequest('get', '/dbmovies');
         this.setState({
           moviesDB: results.data,
         });
@@ -69,7 +69,11 @@ class StoredMoviesList extends Component {
 
   deleteMovie = async id => {
     try {
-      let results = await this.makeAnyRequest('delete', `/dbmovies/${id}`, {});
+      let results = await this.props.makeAnyRequest(
+        'delete',
+        `/dbmovies/${id}`,
+        {}
+      );
       if (results) {
         let newMovieArray = this.state.moviesDB.filter(
           movie => movie._id !== results.data._id
@@ -105,7 +109,7 @@ class StoredMoviesList extends Component {
       openModalToAddMovieComment: false,
     });
     try {
-      let results = await this.makeAnyRequest(
+      let results = await this.props.makeAnyRequest(
         'put',
         `/dbmovies/${movieToUpdate._id}`,
         movieToUpdate
@@ -165,9 +169,7 @@ class StoredMoviesList extends Component {
                 }
               />
             ) : (
-              <CardGroup>
-                {moviesComponentArray}
-              </CardGroup>
+              <CardGroup>{moviesComponentArray}</CardGroup>
             )
           ) : (
             <h3>
