@@ -6,10 +6,11 @@ const LogoutButton = props => {
   // I am using the useEffect hook here to "hoist" the user up to App through the function logoutUser
   // this LogoutButton component only is rendered/mounted once the user is successfully logged in
   // utilizing useEffect is a solution to getting the user up into App - state once it is logged in
+  const bs = props.loginUser;
   useEffect(() => {
     // console.log('well that component did mount alright');
-    props.loginUser(user);
-  }, []);
+    bs(user);
+  }, [user, bs]);
 
   const localLogoutBtnHandler = () => {
     logout({ returnTo: window.location.origin });
@@ -20,4 +21,3 @@ const LogoutButton = props => {
 };
 
 export default LogoutButton;
-
