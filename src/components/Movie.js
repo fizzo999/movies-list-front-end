@@ -62,7 +62,10 @@ class Movie extends Component {
               release date: {this.props.movieObj.released_on}
             </Card.Text>
             <Card.Text>
-              email who added this movie: {this.props.movieObj.email}
+              user who added this movie:{' '}
+              {this.props.movieObj.email
+                ? this.props.movieObj.email.split('@')[0]
+                : ''}
             </Card.Text>
           </Card.Body>
           <Card.Footer>
