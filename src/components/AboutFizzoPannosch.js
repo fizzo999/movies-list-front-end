@@ -2,19 +2,19 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import github from '../assets/gh.png';
 import linkedin from '../assets/li.png';
-import '../style/AboutMichellePannosch.css';
+import '../style/AboutFizzoPannosch.css';
 
-const AboutMichellePannosch = () => {
+const AboutFizzoPannosch = () => {
   return (
     <Container fluid='md' maxwidth='sm'>
-      <h2>Hover over the image to learn more about Michelle</h2>
-      <section className='about-Michelle-wrapper'>
+      <h2>Hover over the image to learn more about Fizzo</h2>
+      <section className='about-Fizzo-wrapper'>
         <div className='about-card-container'>
           <div className='about-card'>
-            <div className='side Michelle_001'></div>
+            <div className='side Fizzo_001'></div>
             <div className='side back'>
               <div>
-                <h3>About Michelle the software developer</h3>
+                <h3>About Fizzo the software developer</h3>
                 <p>
                   Fullstack JavaScript developer with a background in
                   Hospitality Management. Passionate about writing accessible,
@@ -25,16 +25,16 @@ const AboutMichellePannosch = () => {
               </div>
               <div className='connect'>
                 <a
-                  href='https://github.com/CoderMichelle'
-                  alt='Michelle`s github'
+                  href='https://github.com/fizzo999'
+                  alt='Fizzo`s github'
                   target='_blank'
                   rel='noopener noreferrer'
                 >
                   <img className='social-icon' src={github} alt='github' />
                 </a>
                 <a
-                  href='https://www.linkedin.com/in/michelle-pannosch/'
-                  alt='Michelle`s linkedIn'
+                  href='https://www.linkedin.com/in/fizzopannosch/'
+                  alt='Fizzo`s linkedIn'
                   target='_blank'
                   rel='noopener noreferrer'
                 >
@@ -49,4 +49,4 @@ const AboutMichellePannosch = () => {
   );
 };
 
-export default AboutMichellePannosch;
+export default AboutFizzoPannosch;

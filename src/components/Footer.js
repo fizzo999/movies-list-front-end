@@ -6,7 +6,7 @@ class Footer extends React.Component {
   render() {
     return (
       <Container fluid='md' maxwidth='sm'>
-        <h3>Copyright &copy; 2022 Michelle Pannosch</h3>
+        <h3>Copyright &copy; 2023 Fizzo Pannosch</h3>
       </Container>
     );
   }
