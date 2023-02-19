@@ -29,7 +29,7 @@ class Header extends Component {
               <Link to='about'>about this APP</Link>
             </li>
             <li>
-              <Link to='aboutMichellePannosch'>about Michelle Pannosch</Link>
+              <Link to='aboutFizzoPannosch'>about Fizzo Pannosch</Link>
             </li>
             <li>
               <Link to='MoviesList'>my Favorite Movies LIST</Link>

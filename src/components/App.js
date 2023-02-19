@@ -9,7 +9,7 @@ import Header from './Header.js';
 import Footer from './Footer.js';
 import About from './About.js';
 import Alert from './Alert.js';
-import AboutMichellePannosch from './AboutMichellePannosch.js';
+import AboutFizzoPannosch from './AboutFizzoPannosch.js';
 import StoredMoviesList from './StoredMoviesList.js';
 
 import LoginModal from './LoginModal';
@@ -153,8 +153,8 @@ class App extends Component {
             <Route path='/about' element={<About />} />
 
             <Route
-              path='/aboutMichellePannosch'
-              element={<AboutMichellePannosch />}
+              path='/aboutFizzoPannosch'
+              element={<AboutFizzoPannosch />}
             />
 
             <Route

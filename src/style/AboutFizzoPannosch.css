@@ -1,4 +1,4 @@
-/* =====ABOUT Michelle Pannosch CARD FLIP===== */
+/* =====ABOUT Fizzo Pannosch CARD FLIP===== */
 h1,
 h2,
 h4 {
@@ -10,23 +10,28 @@ h2 {
   margin-bottom: 0;
 }
 
-.about-Michelle-wrapper {
+.about-Fizzo-wrapper {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.Michelle_001 {
-  background-image: url('../assets/Michelle_001.jpg');
+.Fizzo_001 {
+  background-image: url('../assets/Fizzo001.jpg');
   background-size: cover;
+  background-size: 300px 400px;
+  background-repeat: no-repeat;
   border-radius: 5px;
+  display: block;
+  margin: 0 40px;
 }
 
 .center {
   display: flex;
   justify-content: center;
 }
+
 .about-card-container {
   height: 400px;
   width: 400px;
@@ -36,6 +41,7 @@ h2 {
   justify-content: center;
   display: flex;
 }
+
 .about-img {
   height: 390px;
   border-radius: 10px;
@@ -51,15 +57,18 @@ h2 {
   border: thick black solid;
   display: flex;
 }
+
 .about-card:hover {
   transform: rotateY(180deg);
 }
+
 .about-card .side {
   backface-visibility: hidden;
   height: 100%;
   position: absolute;
   width: 100%;
 }
+
 .about-card .back {
   transform: rotateY(180deg);
   background: linear-gradient(purple, khaki);
