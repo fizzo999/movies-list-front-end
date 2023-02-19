@@ -1,8 +1,13 @@
 # App Name: VideoFavoritesList-frontend
 
 **Author**: Fizzo Pannosch
-**Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
+
+
+**Version**: 1.0.15 
+
+
 **Deployed Site: https://favorite-movie-list.netlify.app/**
+
 
 ## Overview
 
