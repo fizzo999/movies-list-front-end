@@ -35,7 +35,7 @@ class Form extends React.Component {
   };
   render() {
     return (
-      <Container  fluid='md' maxwidth='sm'>
+      <Container fluid='md' maxwidth='sm'>
         {this.props.user ? <h3 className='greeting'>hello, {this.props.user.name} !</h3> : ''}
         <h3>
           what we are currently searching for:{' '}
